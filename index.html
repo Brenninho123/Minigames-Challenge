@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minigames Challenge</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>🎮 Minigames Challenge</h1>
+    <div id="scoreBoard">Total Score: <span id="totalScore">0</span></div>
+</header>
+
+<nav class="menu">
+    <button onclick="openGame('click')">Click Speed</button>
+    <button onclick="openGame('guess')">Guess Number</button>
+    <button onclick="openGame('memory')">Memory</button>
+    <button onclick="openGame('reaction')">Reaction</button>
+    <button onclick="openGame('snake')">Snake</button>
+    <button onclick="openGame('ttt')">Tic Tac Toe</button>
+</nav>
+
+<section id="gameArea"></section>
+
+<section class="ranking">
+    <h2>🏆 Ranking</h2>
+    <ul id="rankingList"></ul>
+</section>
+
+<script src="js/storage.js"></script>
+<script src="js/main.js"></script>
+<script src="js/click.js"></script>
+<script src="js/guess.js"></script>
+<script src="js/memory.js"></script>
+<script src="js/reaction.js"></script>
+<script src="js/snake.js"></script>
+<script src="js/tictactoe.js"></script>
+
+</body>
+</html>
