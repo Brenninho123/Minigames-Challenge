@@ -4,29 +4,303 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Minigames Challenge</title>
-<link rel="stylesheet" href="css/style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    background:
+    radial-gradient(circle at top,#23234a 0%,#0f1020 45%,#05050d 100%);
+    color:white;
+    font-family:Arial,sans-serif;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+    linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
+    background-size:40px 40px;
+    pointer-events:none;
+}
+
+header{
+    width:100%;
+    padding:30px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:20px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    background:rgba(0,0,0,0.25);
+    backdrop-filter:blur(10px);
+}
+
+header h1{
+    font-size:clamp(2rem,4vw,3rem);
+    font-weight:900;
+    letter-spacing:1px;
+    text-shadow:0 0 20px rgba(255,255,255,0.15);
+}
+
+#scoreBoard{
+    background:rgba(255,255,255,0.08);
+    padding:14px 22px;
+    border-radius:18px;
+    font-size:1.1rem;
+    font-weight:bold;
+    border:1px solid rgba(255,255,255,0.12);
+    box-shadow:0 0 25px rgba(0,0,0,0.35);
+}
+
+.menu{
+    width:min(1400px,95%);
+    margin:30px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:18px;
+}
+
+.menu button{
+    height:70px;
+    border:none;
+    border-radius:20px;
+    background:
+    linear-gradient(135deg,#5d5dff,#7f37ff);
+    color:white;
+    font-size:1rem;
+    font-weight:bold;
+    cursor:pointer;
+    transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    opacity .18s ease;
+    box-shadow:
+    0 12px 30px rgba(0,0,0,0.3),
+    inset 0 1px rgba(255,255,255,0.15);
+}
+
+.menu button:hover{
+    transform:translateY(-5px) scale(1.03);
+    box-shadow:
+    0 20px 40px rgba(92,92,255,0.4);
+}
+
+.menu button:active{
+    transform:scale(.96);
+}
+
+#gameArea{
+    width:min(1400px,95%);
+    min-height:500px;
+    margin:auto;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:28px;
+    padding:30px;
+    backdrop-filter:blur(12px);
+    box-shadow:
+    0 20px 50px rgba(0,0,0,0.35);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+}
+
+#gameArea::before{
+    content:"";
+    position:absolute;
+    width:400px;
+    height:400px;
+    background:rgba(125,95,255,0.12);
+    filter:blur(90px);
+    border-radius:50%;
+    top:-100px;
+    right:-100px;
+}
+
+.placeholder{
+    text-align:center;
+    z-index:1;
+}
+
+.placeholder h2{
+    font-size:3rem;
+    margin-bottom:15px;
+}
+
+.placeholder p{
+    font-size:1.1rem;
+    opacity:.75;
+}
+
+.ranking{
+    width:min(1400px,95%);
+    margin:35px auto 60px;
+    background:rgba(255,255,255,0.05);
+    border-radius:28px;
+    padding:30px;
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    box-shadow:
+    0 15px 40px rgba(0,0,0,0.3);
+}
+
+.ranking h2{
+    margin-bottom:20px;
+    font-size:2rem;
+}
+
+#rankingList{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+#rankingList li{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:18px;
+    padding:18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    transition:transform .15s ease;
+}
+
+#rankingList li:hover{
+    transform:translateX(6px);
+}
+
+.desktop-help{
+    margin-top:18px;
+    opacity:.6;
+    font-size:.95rem;
+}
+
+@media(max-width:900px){
+
+    header{
+        justify-content:center;
+        text-align:center;
+    }
+
+    #gameArea{
+        min-height:420px;
+        padding:20px;
+    }
+
+    .menu{
+        grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+    }
+
+    .menu button{
+        height:60px;
+        font-size:.95rem;
+    }
+
+    .placeholder h2{
+        font-size:2.2rem;
+    }
+}
+
+@media(max-width:520px){
+
+    header{
+        padding:24px 16px;
+    }
+
+    .menu{
+        width:92%;
+        gap:12px;
+    }
+
+    .menu button{
+        border-radius:16px;
+        font-size:.88rem;
+    }
+
+    #gameArea{
+        width:92%;
+        border-radius:22px;
+    }
+
+    .ranking{
+        width:92%;
+        border-radius:22px;
+    }
+
+    .ranking h2{
+        font-size:1.5rem;
+    }
+}
+</style>
 </head>
+
 <body>
 
 <header>
     <h1>🎮 Minigames Challenge</h1>
-    <div id="scoreBoard">Total Score: <span id="totalScore">0</span></div>
+
+    <div id="scoreBoard">
+        Total Score:
+        <span id="totalScore">0</span>
+    </div>
 </header>
 
 <nav class="menu">
-    <button onclick="openGame('click')">Click Speed</button>
-    <button onclick="openGame('guess')">Guess Number</button>
-    <button onclick="openGame('memory')">Memory</button>
-    <button onclick="openGame('reaction')">Reaction</button>
-    <button onclick="openGame('snake')">Snake</button>
-    <button onclick="openGame('ttt')">Tic Tac Toe</button>
+    <button onclick="openGame('click')">⚡ Click Speed</button>
+    <button onclick="openGame('guess')">🎯 Guess Number</button>
+    <button onclick="openGame('memory')">🧠 Memory</button>
+    <button onclick="openGame('reaction')">🔥 Reaction</button>
+    <button onclick="openGame('snake')">🐍 Snake</button>
+    <button onclick="openGame('ttt')">❌ Tic Tac Toe</button>
 </nav>
 
-<section id="gameArea"></section>
+<section id="gameArea">
+    <div class="placeholder">
+        <h2>Choose a Minigame</h2>
+        <p>Play, earn points and climb the ranking.</p>
+
+        <div class="desktop-help">
+            Full desktop keyboard and mouse support enabled
+        </div>
+    </div>
+</section>
 
 <section class="ranking">
     <h2>🏆 Ranking</h2>
-    <ul id="rankingList"></ul>
+
+    <ul id="rankingList">
+        <li>
+            <span>Player One</span>
+            <strong>1200 pts</strong>
+        </li>
+
+        <li>
+            <span>Player Two</span>
+            <strong>980 pts</strong>
+        </li>
+
+        <li>
+            <span>Player Three</span>
+            <strong>750 pts</strong>
+        </li>
+    </ul>
 </section>
 
 <script src="js/storage.js"></script>
